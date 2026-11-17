@@ -6,7 +6,7 @@ const _lp = { parts: [], rafId: null, src: null, count: 3 };
 const CUSTOM_THEMES = ['cyberpunk', 'synthwave', 'midnight', 'egypt', 'city', 'eco', 'water', 'fire',
   'pkpsy', 'pktenebres', 'pkelectrik', 'pkfee', 'pkspectre', 'pkdragon', 'pkglace', 'pkcombat',
   'pkpoison', 'pksol', 'pkvol', 'pkinsecte', 'pkroche', 'pkacier', 'pknormal', 'pkplante', 'pkfeu', 'pkeau',
-  'rainbow', 'trans', 'pan', 'bi', 'lesbian', 'plage',
+  'rainbow', 'trans', 'pan', 'bi', 'lesbian', 'plage', 'echo2',
   'botw', 'totk', 'yoshiwool', 'mario64', 'minecraft', 'pacman', 'megaman', 'tekken', 'sf2',
   'custom',
   'smario','sdk','slink','ssamus','sdsamus','syoshi','skirby','sfox','spikachu','sluigi',
@@ -457,10 +457,10 @@ function update(s) {
   document.body.classList.toggle('sb-ind-mode', _titleMode === 'independant' && _style !== 'pro');
 
   // Theme class
-  ['default', 'cyberpunk', 'synthwave', 'midnight', 'egypt', 'city', 'eco', 'water', 'fire',
+  ['default', 'nintendo', 'cyberpunk', 'synthwave', 'midnight', 'egypt', 'city', 'eco', 'water', 'fire',
    'pkpsy', 'pktenebres', 'pkelectrik', 'pkfee', 'pkspectre', 'pkdragon', 'pkglace', 'pkcombat',
    'pkpoison', 'pksol', 'pkvol', 'pkinsecte', 'pkroche', 'pkacier', 'pknormal', 'pkplante', 'pkfeu', 'pkeau',
-   'rainbow', 'trans', 'pan', 'bi', 'lesbian', 'plage',
+   'rainbow', 'trans', 'pan', 'bi', 'lesbian', 'plage', 'alsace', 'echo2',
    'botw', 'totk', 'yoshiwool', 'mario64', 'minecraft', 'pacman', 'megaman', 'tekken', 'sf2',
    'smario','sdk','slink','ssamus','sdsamus','syoshi','skirby','sfox','spikachu','sluigi',
    'sness','sfalcon','sjigglypuff','speach','sdaisy','sbowser','siceclimbers','ssheik','szelda','sdrmario',

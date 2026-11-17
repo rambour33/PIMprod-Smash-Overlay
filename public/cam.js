@@ -8,6 +8,7 @@
   // ── Couleurs par thème ────────────────────────────────────────
   const THEME_COLORS = {
     default:    { primary: '#E8B830', glow: 'rgba(232,184,48,0.55)'  },
+    nintendo:   { primary: '#E60012', glow: 'rgba(230,0,18,0.55)'   },
     cyberpunk:  { primary: '#00F5FF', glow: 'rgba(0,245,255,0.6)'   },
     synthwave:  { primary: '#FF6EC7', glow: 'rgba(255,110,199,0.6)' },
     midnight:   { primary: '#4488FF', glow: 'rgba(68,136,255,0.55)' },
@@ -22,6 +23,7 @@
     bi:         { primary: '#9B59D0', glow: 'rgba(155,89,208,0.55)' },
     lesbian:    { primary: '#FF4500', glow: 'rgba(255,69,0,0.55)'   },
     plage:      { primary: '#F4D35E', glow: 'rgba(244,211,94,0.55)' },
+    echo2:      { primary: '#9B7BB8', glow: 'rgba(94,69,120,0.6)' },
     smario:     { primary: '#E52222', glow: 'rgba(229,34,34,0.6)'   },
     ssonic:     { primary: '#1E90FF', glow: 'rgba(30,144,255,0.65)' },
     spikachu:   { primary: '#FFD700', glow: 'rgba(255,215,0,0.65)'  },

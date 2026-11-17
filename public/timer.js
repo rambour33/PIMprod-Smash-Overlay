@@ -8,6 +8,7 @@
   // ── Couleurs par thème ────────────────────────────────────────
   const THEME_COLORS = {
     default:    { primary:'#E8B830', glow:'rgba(232,184,48,0.55)',   bg:'rgba(14,14,18,0.92)'   },
+    nintendo:   { primary:'#E60012', glow:'rgba(230,0,18,0.55)',     bg:'rgba(250,250,250,0.95)' },
     cyberpunk:  { primary:'#00F5FF', glow:'rgba(0,245,255,0.6)',     bg:'rgba(5,0,20,0.94)'     },
     synthwave:  { primary:'#FF6EC7', glow:'rgba(255,110,199,0.6)',   bg:'rgba(13,0,48,0.94)'    },
     midnight:   { primary:'#4488FF', glow:'rgba(68,136,255,0.55)',   bg:'rgba(5,10,30,0.94)'    },
@@ -22,6 +23,7 @@
     bi:         { primary:'#9B59D0', glow:'rgba(155,89,208,0.55)',  bg:'rgba(12,4,18,0.94)'    },
     lesbian:    { primary:'#FF4500', glow:'rgba(255,69,0,0.55)',    bg:'rgba(20,8,4,0.94)'     },
     plage:      { primary:'#F4D35E', glow:'rgba(244,211,94,0.55)',  bg:'rgba(18,14,4,0.92)'    },
+    echo2:      { primary:'#9B7BB8', glow:'rgba(94,69,120,0.6)',  bg:'rgba(59,5,16,0.92)'    },
     smario:     { primary:'#E52222', glow:'rgba(229,34,34,0.6)',    bg:'rgba(20,4,4,0.94)'     },
     sdk:        { primary:'#7B3F00', glow:'rgba(123,63,0,0.6)',     bg:'rgba(14,8,2,0.94)'     },
     slink:      { primary:'#D4A017', glow:'rgba(212,160,23,0.6)',   bg:'rgba(14,12,2,0.94)'    },

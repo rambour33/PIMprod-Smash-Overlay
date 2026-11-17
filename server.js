@@ -85,6 +85,41 @@ app.use((req, res, next) => {
   next();
 });
 
+// ─── Rechargement à chaud (touche R dans la console) ─────────────────────────
+// Injecte /pso-reload.js dans chaque page HTML servie : à l'event 'psoReload',
+// la page (overlay OBS, panneau…) se recharge et prend les fichiers modifiés.
+const PSO_RELOAD_TAG = '<script src="/pso-reload.js"></script>';
+// Overlays OBS conçus en 1920×1080 : mis à l'échelle si la fenêtre a une autre taille
+const PSO_FIT_TAG = '<script src="/pso-fit.js"></script>';
+const PSO_FIT_PAGES = new Set([
+  'overlay.html', 'overlay-slim.html', 'scoreboard-custom.html', 'casters.html', 'casters-custom.html',
+  'cam.html', 'frames.html', 'ticker.html', 'timer.html', 'stream-title.html', 'vs-screen.html',
+  'victory.html', 'top8.html', 'bracket.html', 'nextmatch.html', 'upcoming.html', 'stageveto.html',
+  'h2h.html', 'player-stats.html', 'tournament-history.html', 'pso.html',
+  'twitch-chat.html', 'twitch-viewer.html', 'twitch-alerts.html',
+  'youtube-chat.html', 'youtube-viewer.html', 'youtube-alerts.html', 'combined-chat.html',
+]);
+function sendHtmlWithReload(res, file) {
+  fs.readFile(file, 'utf8', (err, html) => {
+    if (err) return res.status(404).end();
+    const tags = PSO_RELOAD_TAG + (PSO_FIT_PAGES.has(path.basename(file)) ? PSO_FIT_TAG : '');
+    html = html.includes('</body>') ? html.replace(/<\/body>(?![\s\S]*<\/body>)/, tags + '</body>') : html + tags;
+    res.set('Cache-Control', 'no-cache');
+    res.type('html').send(html);
+  });
+}
+app.use((req, res, next) => {
+  const origSendFile = res.sendFile.bind(res);
+  res.sendFile = (file, ...rest) => {
+    if (typeof file === 'string' && file.toLowerCase().endsWith('.html')) return sendHtmlWithReload(res, file);
+    return origSendFile(file, ...rest);
+  };
+  if (req.method === 'GET' && req.path.toLowerCase().endsWith('.html')) {
+    const file = path.join(__dirname, 'public', path.normalize(decodeURIComponent(req.path)).replace(/^([\\/]|\.\.)+/, ''));
+    if (file.startsWith(path.join(__dirname, 'public')) && fs.existsSync(file)) return sendHtmlWithReload(res, file);
+  }
+  next();
+});
 
 app.use('/full', express.static(path.join(__dirname, 'public', 'full'), { maxAge: '7d' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -1981,6 +2016,14 @@ async function startggQuery(query, variables = {}, apiKeyOverride = null) {
     console.error('[startgg] réponse non-JSON (status', res.status, '):', raw.slice(0, 500));
     throw new Error('Réponse invalide de start.gg (status ' + res.status + ')');
   }
+  // Erreur d'authentification / quota : start.gg répond {success:false, message} sans "errors"
+  if (data.success === false || (!data.data && !data.errors)) {
+    const msg = data.message || ('Erreur start.gg (status ' + res.status + ')');
+    console.error('[startgg]', res.status, msg);
+    if (/authentication token/i.test(msg))
+      throw new Error('Clé API start.gg invalide ou expirée — génère-en une nouvelle sur start.gg (Paramètres du compte → Developer Settings)');
+    throw new Error(msg);
+  }
   if (data.errors) {
     console.error('[startgg] Erreurs GraphQL :');
     data.errors.forEach((e, i) => console.error(`  [${i}]`, JSON.stringify(e)));
@@ -1996,7 +2039,8 @@ app.get('/api/startgg/config', (req, res) => {
 
 app.post('/api/startgg/config', (req, res) => {
   const cfg = getConfig();
-  if (req.body.apiKey !== undefined) cfg.startggApiKey = req.body.apiKey;
+  if (req.body.apiKey !== undefined)
+    cfg.startggApiKey = String(req.body.apiKey).trim().replace(/^Bearer\s+/i, '');
   saveConfig(cfg);
   res.json({ ok: true });
 });
@@ -4114,4 +4158,34 @@ server.listen(PORT, '0.0.0.0', () => {
     });
   }
   console.log('');
+  setupConsoleKeys();
 });
+
+// ─── Raccourcis clavier dans la console ──────────────────────────────────────
+//   R → recharge tous les overlays + le panneau (fichiers HTML/CSS/JS modifiés)
+//   S → redémarre le serveur (modifs de server.js) — start.bat relance tout seul
+//   Q / Ctrl+C → arrête le serveur
+function setupConsoleKeys() {
+  if (!process.stdin.isTTY) return;
+  console.log('  ── Raccourcis console ─────────────────────────────────────');
+  console.log('   [R] Recharger overlays + panneau   [S] Redémarrer le serveur   [Q] Quitter');
+  console.log('');
+  process.stdin.setRawMode(true);
+  process.stdin.resume();
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', (key) => {
+    const k = key.toLowerCase();
+    if (k === 'r') {
+      const n = io.engine.clientsCount;
+      io.emit('psoReload');
+      console.log('🔄 Rechargement envoyé à ' + n + ' page(s) connectée(s)');
+    } else if (k === 's') {
+      console.log('♻️  Redémarrage du serveur…');
+      io.emit('psoReload', { afterRestart: true });
+      setTimeout(() => process.exit(0), 300);
+    } else if (k === 'q' || key === '\u0003') {
+      console.log('⏹  Arrêt du serveur');
+      process.exit(1);
+    }
+  });
+}

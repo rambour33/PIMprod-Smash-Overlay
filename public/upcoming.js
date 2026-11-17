@@ -4,6 +4,7 @@
   /* text: couleur du texte sur le fond primary (clair ou sombre selon luminosité) */
   const THEME_COLORS = {
     default:     { primary: '#E8B830', text: '#0A0A10' },
+    nintendo:    { primary: '#E60012', text: '#FFFFFF' },
     cyberpunk:   { primary: '#00F5FF', text: '#0A0A10' },
     synthwave:   { primary: '#FF6EC7', text: '#0A0A10' },
     midnight:    { primary: '#4488FF', text: '#0A0A10' },
@@ -18,6 +19,7 @@
     bi:          { primary: '#9B59D0', text: '#F0EEF8' },
     lesbian:     { primary: '#FF4500', text: '#0A0A10' },
     plage:       { primary: '#F4D35E', text: '#0A0A10' },
+    echo2:       { primary: '#9B7BB8', text: '#FFFFFF' },
     smario:      { primary: '#E52222', text: '#F0EEF8' },
     sdk:         { primary: '#7B3F00', text: '#F0EEF8' },
     slink:       { primary: '#D4A017', text: '#0A0A10' },

@@ -6,11 +6,13 @@
 // ── Couleur d'accent par thème ───────────────────────────────
 const VS_THEME_ACCENT = {
   // Thèmes nommés
+  nintendo:   '#E60012',
   default:    '#FFFFFF', cyberpunk:  '#00FFCC', synthwave:  '#C77DFF',
   midnight:   '#4FC3F7', egypt:      '#D4AF37', city:       '#4488FF',
   eco:        '#44BB44', water:      '#0099DD', fire:       '#FF4500',
   rainbow:    '#FF6688', trans:      '#55CCFF', pan:        '#FF8C00',
   bi:         '#9955CC', lesbian:    '#FF5555', plage:      '#FFD700',
+  echo2:      '#9B7BB8',
   // Types Pokémon
   pkpsy:'#FF4DA6', pktenebres:'#705898', pkelectrik:'#F8D030',
   pkfee:'#EE99AC', pkspectre:'#705898', pkdragon:'#6F35FC',
@@ -347,6 +349,13 @@ function update(s) {
   vsS1.textContent       = s.player1.score ?? 0;
   vsS2.textContent       = s.player2.score ?? 0;
   $('vs-dot').style.display = (s.stage && s.currentStage) ? 'inline' : 'none';
+
+  // Bloc round haut-droite (thème ECHO 2) : « Bracket — Winners Round 1 » → phase + round
+  const stageParts = String(s.stage || '').split(/\s+[—–]\s+/);
+  const rbRound = stageParts.length > 1 ? stageParts.slice(1).join(' — ') : (s.stage || '');
+  $('vs-rb-phase').textContent = stageParts.length > 1 ? stageParts[0] : '';
+  $('vs-rb-round').textContent = rbRound;
+  $('vs-round-badge').classList.toggle('vs-rb-empty', !rbRound);
 
   // Stage background
   if (!prevState || prevState.currentStage !== s.currentStage) {

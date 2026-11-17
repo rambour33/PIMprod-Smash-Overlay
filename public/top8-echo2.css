@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════════════════════
+   TOP 8 · ECHO 2 — « l'album du tournoi »
+   DA : bordeaux #3B0510 · violet prune #5E4578 / #9B7BB8 · gris #D9D9D9
+   Polices : Narnia (titres) · Petrov Sans (texte)
+   Actif uniquement quand le thème overlay = echo2
+   ═══════════════════════════════════════════════════════════════ */
+
+#e2-top8 { display: none; }
+
+/* En ECHO 2, on masque la mise en page standard et on affiche la nôtre */
+.top8-root.theme-echo2 { padding: 0; }
+.top8-root.theme-echo2::before,
+.top8-root.theme-echo2::after,
+.top8-root.theme-echo2 > :not(#e2-top8) { display: none !important; }
+.top8-root.theme-echo2 #e2-top8 { display: block; }
+
+#e2-top8 {
+  --e2-bord:  #3B0510;
+  --e2-prune: #5E4578;
+  --e2-lilas: #9B7BB8;
+  --e2-gris:  #D9D9D9;
+  position: absolute;
+  left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  overflow: hidden;
+  color: #fff;
+  font-family: 'Petrov Sans', 'Inter', sans-serif;
+}
+
+/* ── Fond : bordeaux texturé + coupe diagonale vers le noir (planche DA) ── */
+.e2-bg {
+  position: absolute; inset: 0;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(ellipse 55% 60% at 22% 55%, rgba(94,69,120,0.38) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 75% 20%, rgba(110,20,40,0.55) 0%, transparent 70%),
+    linear-gradient(168deg, #4a0915 0%, #3B0510 52%, #1a0207 52.1%, #070104 100%);
+}
+/* Fine ligne lumineuse sur la coupe diagonale */
+.e2-bg::after {
+  content: ''; position: absolute; left: -10%; right: -10%;
+  top: 50.5%; height: 2px;
+  transform: rotate(-12deg); transform-origin: center;
+  background: linear-gradient(90deg, transparent, rgba(155,123,184,0.55) 30%, rgba(217,217,217,0.35) 60%, transparent);
+  box-shadow: 0 0 18px rgba(155,123,184,0.5);
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.e2-head {
+  position: absolute; left: 80px; top: 54px; z-index: 10;
+}
+.e2-logo {
+  font-family: 'Narnia', 'Russo One', sans-serif;
+  font-size: 104px; line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-shadow: 0 6px 30px rgba(0,0,0,0.5);
+}
+.e2-sub {
+  margin-top: 14px;
+  font-size: 21px; font-weight: 700;
+  letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--e2-gris);
+}
+.e2-sub b { color: var(--e2-lilas); font-weight: 800; }
+
+/* ── Vinyle géant ─────────────────────────────────────────────── */
+.e2-vinyl {
+  position: absolute; z-index: 2;
+  width: 1040px; height: 1040px;
+  left: -170px; top: 150px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 31%, rgba(0,0,0,0) 31%),
+    repeating-radial-gradient(circle, #0d0b0e 0 2px, #17141a 2px 4px, #0f0d11 4px 6px),
+    #111;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 10px rgba(0,0,0,0.35), inset 0 0 60px rgba(0,0,0,0.8);
+}
+.e2-vinyl-spin {
+  position: absolute; inset: 0; border-radius: 50%;
+  animation: e2-spin 9s linear infinite;
+}
+/* Reflets qui tournent */
+.e2-vinyl-spin::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    transparent 0 30deg, rgba(255,255,255,0.10) 45deg, transparent 62deg 205deg,
+    rgba(155,123,184,0.16) 222deg, transparent 240deg);
+}
+/* Étiquette centrale */
+.e2-label {
+  position: absolute; left: 50%; top: 50%;
+  width: 330px; height: 330px; margin: -165px 0 0 -165px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #0a0a0a 0 9px, transparent 10px),
+    radial-gradient(circle, transparent 0 140px, rgba(0,0,0,0.25) 141px),
+    linear-gradient(160deg, var(--e2-prune), #3e2b52);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: inset 0 0 0 3px rgba(217,217,217,0.25);
+}
+.e2-label-txt {
+  position: absolute; inset: 22px; border-radius: 50%;
+  font-family: 'Petrov Sans', sans-serif; font-weight: 700;
+  font-size: 15px; letter-spacing: 0.35em; color: rgba(255,255,255,0.75);
+}
+.e2-label-txt span {
+  position: absolute; left: 50%; top: 0; transform-origin: 0 143px;
+}
+@keyframes e2-spin { to { transform: rotate(360deg); } }
+
+/* ── Champion ─────────────────────────────────────────────────── */
+.e2-champ-art {
+  position: absolute; z-index: 4;
+  left: 30px; bottom: 210px; width: 800px; height: 780px;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.e2-champ-art img {
+  max-width: 100%; max-height: 100%; object-fit: contain; object-position: bottom center;
+  filter: drop-shadow(0 0 40px rgba(155,123,184,0.45)) drop-shadow(0 20px 30px rgba(0,0,0,0.6));
+}
+.e2-champ-plate {
+  position: absolute; z-index: 6;
+  left: 70px; bottom: 54px;
+  display: flex; align-items: flex-end; gap: 22px;
+}
+.e2-champ-no {
+  font-family: 'Narnia', 'Russo One', sans-serif;
+  font-size: 150px; line-height: 0.78;
+  color: var(--e2-lilas);
+  text-shadow: 0 0 40px rgba(155,123,184,0.6);
+}
+.e2-champ-txt { padding-bottom: 6px; }
+.e2-champ-kicker {
+  font-size: 18px; font-weight: 800; letter-spacing: 0.5em;
+  color: var(--e2-gris); text-transform: uppercase;
+}
+.e2-champ-name {
+  font-family: 'Narnia', 'Russo One', sans-serif;
+  font-size: 92px; line-height: 1; letter-spacing: 0.04em;
+  white-space: nowrap; max-width: 760px; overflow: hidden; text-overflow: ellipsis;
+  text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+}
+.e2-champ-tag {
+  font-size: 22px; font-weight: 600; letter-spacing: 0.2em; color: var(--e2-lilas);
+  text-transform: uppercase; margin-top: 6px;
+}
+
+/* ── Cassette (haut droite) ───────────────────────────────────── */
+.e2-tape {
+  position: absolute; z-index: 10;
+  right: 80px; top: 44px;
+  width: 300px; height: 190px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #e9e6e1, #c9c5bf);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(0,0,0,0.15);
+  transform: rotate(6deg);
+}
+.e2-tape::before { /* rivets */
+  content: ''; position: absolute; inset: 9px; border-radius: 10px;
+  background:
+    radial-gradient(circle at 4px 4px, #8d8780 0 3px, transparent 4px),
+    radial-gradient(circle at calc(100% - 4px) 4px, #8d8780 0 3px, transparent 4px),
+    radial-gradient(circle at 4px calc(100% - 4px), #8d8780 0 3px, transparent 4px),
+    radial-gradient(circle at calc(100% - 4px) calc(100% - 4px), #8d8780 0 3px, transparent 4px);
+}
+.e2-tape-label {
+  position: absolute; left: 20px; right: 20px; top: 18px; height: 104px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #fbfaf7 0 26%, var(--e2-prune) 26% 30%, #fbfaf7 30%);
+  overflow: hidden;
+}
+.e2-tape-title {
+  position: absolute; left: 12px; top: 4px;
+  font-family: 'Narnia', serif; font-size: 22px; color: var(--e2-bord);
+}
+.e2-tape-side {
+  position: absolute; right: 12px; top: 7px;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.2em; color: var(--e2-prune);
+}
+.e2-tape-window {
+  position: absolute; left: 50%; top: 44px; width: 190px; height: 50px; margin-left: -95px;
+  border-radius: 25px; background: #2a2226;
+  box-shadow: inset 0 0 0 3px #1a1416;
+}
+.e2-reel {
+  position: absolute; top: 5px; width: 40px; height: 40px; border-radius: 50%;
+  background:
+    radial-gradient(circle, #2a2226 0 7px, transparent 8px),
+    repeating-conic-gradient(#eee 0 20deg, #bbb 20deg 60deg);
+  box-shadow: 0 0 0 5px #5b3b2a;
+  animation: e2-spin 3s linear infinite;
+}
+.e2-reel.l { left: 14px; }
+.e2-reel.r { right: 14px; }
+.e2-tape-bottom {
+  position: absolute; left: 60px; right: 60px; bottom: 0; height: 46px;
+  background: #b9b4ad;
+  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+}
+
+/* ── Tracklist (2e → 8e) ─────────────────────────────────────── */
+.e2-list {
+  position: absolute; z-index: 8;
+  left: 920px; top: 236px; width: 920px;
+}
+.e2-list-head {
+  display: flex; align-items: baseline; gap: 20px;
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid rgba(217,217,217,0.25);
+}
+.e2-list-title {
+  font-family: 'Narnia', 'Russo One', sans-serif; font-size: 46px; letter-spacing: 0.06em;
+}
+.e2-list-meta {
+  font-size: 16px; font-weight: 700; letter-spacing: 0.4em; color: var(--e2-gris);
+  text-transform: uppercase; opacity: 0.8;
+}
+
+.e2-row {
+  position: relative;
+  display: flex; align-items: center; gap: 22px;
+  height: 70px; padding: 0 22px 0 0;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.42), rgba(0,0,0,0.18));
+  border-left: 3px solid var(--e2-prune);
+  opacity: 0; transform: translateX(60px);
+}
+.e2-row.big {
+  height: 128px; margin-bottom: 12px;
+  background: linear-gradient(90deg, rgba(59,5,16,0.92), rgba(59,5,16,0.55));
+  border-left-color: var(--e2-lilas);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 0 1px rgba(155,123,184,0.25);
+  overflow: hidden;
+}
+.e2-no {
+  width: 96px; text-align: center; flex: none;
+  font-family: 'Narnia', 'Russo One', sans-serif; font-size: 40px; color: var(--e2-lilas);
+}
+.e2-row.big .e2-no { font-size: 76px; width: 130px; color: #fff; text-shadow: 0 0 26px rgba(155,123,184,0.7); }
+
+.e2-icon { width: 52px; height: 52px; flex: none; object-fit: contain; }
+.e2-art {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 360px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 45%);
+          mask-image: linear-gradient(90deg, transparent, #000 45%);
+  pointer-events: none;
+}
+.e2-art img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; opacity: 0.9; }
+
+.e2-who { flex: 1; min-width: 0; position: relative; z-index: 2; }
+.e2-name {
+  font-family: 'Petrov Sans', 'Inter', sans-serif; font-weight: 800;
+  font-size: 30px; letter-spacing: 0.05em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.e2-row.big .e2-name { font-family: 'Narnia', 'Russo One', sans-serif; font-weight: 400; font-size: 54px; letter-spacing: 0.06em; }
+.e2-tag { font-size: 15px; font-weight: 700; letter-spacing: 0.25em; color: var(--e2-lilas); text-transform: uppercase; }
+.e2-tbd { opacity: 0.35; }
+
+/* Égaliseur animé (petits rangs) */
+.e2-eq { display: flex; align-items: flex-end; gap: 4px; height: 30px; flex: none; position: relative; z-index: 2; }
+.e2-eq i {
+  display: block; width: 5px; height: 100%; border-radius: 2px;
+  background: linear-gradient(0deg, var(--e2-prune), var(--e2-lilas));
+  transform-origin: bottom; animation: e2-eq 1.1s ease-in-out infinite;
+}
+.e2-eq i:nth-child(2) { animation-delay: -0.3s; }
+.e2-eq i:nth-child(3) { animation-delay: -0.6s; }
+.e2-eq i:nth-child(4) { animation-delay: -0.15s; }
+.e2-eq i:nth-child(5) { animation-delay: -0.45s; }
+@keyframes e2-eq { 0%,100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+
+/* ── Barre « lecteur » en bas ─────────────────────────────────── */
+.e2-player {
+  position: absolute; z-index: 8;
+  left: 920px; right: 80px; bottom: 58px;
+  display: flex; align-items: center; gap: 18px;
+  font-size: 16px; font-weight: 700; letter-spacing: 0.22em; color: var(--e2-gris); text-transform: uppercase;
+}
+.e2-play {
+  width: 0; height: 0; flex: none;
+  border-left: 16px solid var(--e2-lilas); border-top: 10px solid transparent; border-bottom: 10px solid transparent;
+}
+.e2-track { flex: 1; height: 4px; border-radius: 2px; background: rgba(217,217,217,0.2); position: relative; }
+.e2-track b {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 2px;
+  background: linear-gradient(90deg, var(--e2-prune), var(--e2-lilas));
+}
+.e2-track b::after {
+  content: ''; position: absolute; right: -7px; top: -5px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 12px var(--e2-lilas);
+}
+.e2-event { white-space: nowrap; max-width: 700px; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Animations d'entrée ─────────────────────────────────────── */
+#e2-top8.e2-in .e2-vinyl      { animation: e2-vinyl-in 1.1s cubic-bezier(0.22,1,0.36,1) both; }
+#e2-top8.e2-in .e2-champ-art  { animation: e2-up 0.9s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
+#e2-top8.e2-in .e2-champ-plate{ animation: e2-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.6s both; }
+#e2-top8.e2-in .e2-head       { animation: e2-down 0.7s ease 0.1s both; }
+#e2-top8.e2-in .e2-tape       { animation: e2-tape-in 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.3s both; }
+#e2-top8.e2-in .e2-list-head  { animation: e2-down 0.6s ease 0.5s both; }
+#e2-top8.e2-in .e2-row        { animation: e2-row-in 0.55s cubic-bezier(0.22,1,0.36,1) both; }
+#e2-top8.e2-in .e2-track b    { animation: e2-progress 2.4s cubic-bezier(0.22,1,0.36,1) 0.9s forwards; }
+
+@keyframes e2-vinyl-in { from { opacity: 0; transform: translateX(-260px) rotate(-90deg); } to { opacity: 1; transform: none; } }
+@keyframes e2-up       { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: none; } }
+@keyframes e2-down     { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+@keyframes e2-tape-in  { from { opacity: 0; transform: translateY(-60px) rotate(-8deg); } to { opacity: 1; transform: rotate(6deg); } }
+@keyframes e2-row-in   { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: none; } }
+@keyframes e2-progress { to { width: 72%; } }

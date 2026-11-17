@@ -222,3 +222,8 @@ body {
 .timer-root.theme-midnight .timer-display {
   background-image: linear-gradient(135deg, rgba(68,136,255,0.06) 0%, transparent 60%);
 }
+
+/* ── Echo 2 · polices DA ─────────────────────────────────────── */
+#timer-root.theme-echo2                   { font-family:'Petrov Sans','Inter',sans-serif; }
+#timer-root.theme-echo2 .timer-label,
+#timer-root.theme-echo2 .timer-digits     { font-family:'Narnia','Russo One',sans-serif; }

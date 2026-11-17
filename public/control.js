@@ -2740,6 +2740,17 @@ const THEMES = {
     castersBgColor:  '#0E0E12',
     castersBgOpacity: 100,
   },
+  nintendo: {
+    sbBgColor:       '#FFFFFF',
+    sbBgOpacity:     100,
+    eventTextColor:  '#E60012',
+    eventTextSize:   12,
+    tagColor:        '#E60012',
+    nameColor:       '#1A1A1A',
+    pronounsColor:   '#9AA0A6',
+    castersBgColor:  '#FFFFFF',
+    castersBgOpacity: 100,
+  },
   cyberpunk: {
     sbBgColor:       '#0D0118',
     sbBgOpacity:     95,
@@ -3080,6 +3091,17 @@ const THEMES = {
     pronounsColor:   '#ADE8F4',
     castersBgColor:  '#03121A',
     castersBgOpacity: 94,
+  },
+  echo2: {
+    sbBgColor:       '#3B0510',
+    sbBgOpacity:     95,
+    eventTextColor:  '#D9D9D9',
+    eventTextSize:   13,
+    tagColor:        '#9B7BB8',
+    nameColor:       '#FFFFFF',
+    pronounsColor:   '#D9D9D9',
+    castersBgColor:  '#3B0510',
+    castersBgOpacity: 95,
   },
   alsace: {
     sbBgColor:       '#3A0008',
@@ -4575,6 +4597,8 @@ document.getElementById('btn-casters-visibility').addEventListener('click', () =
   ns.visible = !castersState.visible;
   socket.emit('updateCasters', ns);
   castersState = ns;
+  // Synchronise aussi la visibilité du système d'animations (sinon l'overlay reste à opacity 0)
+  fetch('/api/transitions/casters/' + (ns.visible ? 'show' : 'hide'), { method: 'POST' }).catch(() => {});
   const btn = document.getElementById('btn-casters-visibility');
   btn.textContent = ns.visible ? 'Masquer' : 'Afficher';
   btn.style.background = ns.visible ? '#1a3a2a' : '';

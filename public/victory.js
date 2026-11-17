@@ -12,6 +12,46 @@ particleCanvas.width  = 960;
 particleCanvas.height = 1080;
 let PS = null;
 
+// Bloc round haut-droite (thème ECHO 2), même logique que l'écran VS :
+// « Bracket — Winners Round 1 » → phase « Bracket » + round « Winners Round 1 »
+function applyRoundBadge(s) {
+  const isEcho2 = s.overlayTheme === 'echo2';
+  root.classList.toggle('theme-echo2', isEcho2);
+  const parts = String(s.stage || '').split(/\s+[—–]\s+/);
+  const rbRound = parts.length > 1 ? parts.slice(1).join(' — ') : (s.stage || '');
+  document.getElementById('vic-rb-phase').textContent = parts.length > 1 ? parts[0] : '';
+  document.getElementById('vic-rb-round').textContent = rbRound;
+  document.getElementById('vic-round-badge').classList.toggle('vic-rb-empty', !rbRound);
+}
+
+// Chemin du PNG d'un perso (même logique que le gagnant)
+function setCharSrc(img, player, s) {
+  const charName = player?.character?.name ? player.character.name.replace(/\s*\/\s*/g, '-') : '';
+  if (!charName) { img.src = ''; img.style.display = 'none'; return; }
+  const enc = encodeURIComponent(charName);
+  img.style.display = '';
+  if (s.charDisplayMode === 'mural') {
+    img.onerror = () => { img.style.display = 'none'; };
+    img.src = '/murals/chara_1_' + enc + '_mural.png';
+  } else {
+    const pad = String(player.stockColor ?? 0).padStart(2, '0');
+    img.onerror = () => {
+      img.onerror = () => { img.style.display = 'none'; };
+      img.src = '/full/chara_1_' + enc + '_00.png';
+    };
+    img.src = '/full/chara_1_' + enc + '_' + pad + '.png';
+  }
+}
+
+// Pseudo du gagnant en grand au-dessus de son perso + perdant en petit (N&B) en bas
+function applyWinnerLoser(s, isP1) {
+  const w = isP1 ? s.player1 : s.player2;
+  const l = isP1 ? s.player2 : s.player1;
+  document.getElementById('vic-winner-name').textContent = w?.name || w?.tag || '';
+  document.getElementById('vic-loser-name').textContent  = l?.name || l?.tag || '';
+  setCharSrc(document.getElementById('vic-loser-img'), l, s);
+}
+
 // ── State ─────────────────────────────────────────────────────────────────────
 let _currentWinner = null;
 let _confettiRunning = false;
@@ -32,6 +72,7 @@ let victoryConfig = {
 // ── Couleurs par thème ────────────────────────────────────────────────────────
 
 const NAMED_THEME_COLORS = {
+  nintendo:   '#E60012',
   cyberpunk:  '#00F5FF', synthwave: '#C77DFF', midnight: '#4FC3F7',
   fire:       '#FF4500', egypt:     '#D4A017', city:     '#00D4FF',
   eco:        '#8BC34A', water:     '#00B4D8', rainbow:  '#FF8C00',
@@ -43,6 +84,7 @@ const NAMED_THEME_COLORS = {
   pkplante:   '#7AC74C', pkfeu:     '#EE8130', pkeau:    '#6390F0',
   trans:      '#55CDFC', pan:       '#FF218C', bi:       '#D60270',
   lesbian:    '#D62900', plage:     '#48CAE4',
+  echo2:      '#9B7BB8',
 };
 
 const CHAR_COLORS = {
@@ -199,6 +241,8 @@ function showVictory(s) {
   if (s.stage) metaParts.push(s.stage);
   if (s.event) metaParts.push(s.event);
   document.getElementById('vic-meta').textContent = metaParts.join('  ·  ');
+  applyRoundBadge(s);
+  applyWinnerLoser(s, isP1);
 
   // Personnage
   const charName = wPlayer.character?.name
@@ -381,6 +425,8 @@ function updateWinnerDisplay(s, winner) {
   if (s.stage) metaParts.push(s.stage);
   if (s.event) metaParts.push(s.event);
   document.getElementById('vic-meta').textContent = metaParts.join('  ·  ');
+  applyRoundBadge(s);
+  applyWinnerLoser(s, isP1);
 
   // Personnage
   const charName = wPlayer.character?.name
@@ -418,8 +464,25 @@ function updateWinnerDisplay(s, winner) {
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
+// Nombre de manches à gagner pour remporter le set (Bo3 → 2, Bo5 → 3, custom → customWins)
+function winsNeeded(s) {
+  if (s.format === 'Bo1') return 1;
+  if (s.format === 'Bo3') return 2;
+  if (s.format === 'Bo5') return 3;
+  return parseInt(s.customWins) || 2;
+}
+
+// Gagnant du set uniquement (pas simplement celui qui mène)
+function getSetWinner(s) {
+  const need = winsNeeded(s);
+  if ((parseInt(s.player1?.score) || 0) >= need) return 1;
+  if ((parseInt(s.player2?.score) || 0) >= need) return 2;
+  return null;
+}
+
 function applyState(s) {
-  const winner = getWinner(s);
+  // Affichage auto seulement quand le set est terminé (avant : dès 1-0)
+  const winner = getSetWinner(s);
   if (winner && winner !== _currentWinner) {
     _currentWinner = winner;
     showVictory(s);

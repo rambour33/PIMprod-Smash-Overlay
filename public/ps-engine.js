@@ -1588,6 +1588,7 @@ const THEME_PARTICLES = {
   bi:          { type:'sparkle', count:65 },
   lesbian:     { type:'sparkle', count:65 },
   plage:       { type:'shell',   count:38 },
+  echo2:       { type:'sparkle', count:45 },
   smario:      { type:'marioitem', count:50 },
   sdk:         { type:'dkitem',    count:40 },
   slink:       { type:'triforce',  count:50 },

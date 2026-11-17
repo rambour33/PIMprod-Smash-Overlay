@@ -2165,6 +2165,58 @@ body {
 .scoreboard.theme-alsace .slim-score         { color:#FFD700; text-shadow:0 0 10px rgba(255,215,0,0.85); }
 .scoreboard.theme-alsace .theme-logo-bg img  { filter:drop-shadow(0 0 6px #FFD700) drop-shadow(0 0 14px rgba(255,215,0,0.60)); }
 
+/* ── Echo 2 · Academic LAN ────────────────────────────────────── */
+/* DA : bordeaux #3B0510 · violet adouci #5E4578 (DA : #550DBA) · gris #D9D9D9 */
+/* Polices : Narnia (titres) · Petrov Sans (corps) — si installées */
+
+@keyframes echo2-pulse {
+  0%,100% { box-shadow:0 0 10px rgba(94,69,120,0.55),0 0 24px rgba(59,5,16,0.40) }
+  50%     { box-shadow:0 0 20px rgba(155,123,184,0.80),0 0 40px rgba(94,69,120,0.25) }
+}
+@keyframes echo2-text {
+  0%,100% { text-shadow:0 0 8px rgba(94,69,120,0.80),0 0 18px rgba(94,69,120,0.35) }
+  50%     { text-shadow:0 0 14px rgba(155,123,184,0.95),0 0 30px rgba(94,69,120,0.50) }
+}
+
+.scoreboard.theme-echo2 .players-container { border-color:#5E4578; animation:echo2-pulse 3.2s ease-in-out infinite; }
+
+/* Fond : bordeaux texturé avec coupe diagonale vers le noir (comme la planche DA) */
+.scoreboard.theme-echo2 .players-container::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    linear-gradient(172deg, rgba(59,5,16,0.0) 0%, rgba(59,5,16,0.0) 58%, rgba(0,0,0,0.55) 59%, rgba(0,0,0,0.70) 100%),
+    radial-gradient(ellipse 90% 70% at 30% 0%, rgba(110,20,40,0.35) 0%, transparent 70%);
+}
+
+/* Rainures de vinyle derrière le score (clin d'œil à la bannière) */
+@keyframes echo2-spin { to { transform:rotate(360deg) } }
+.scoreboard.theme-echo2 .score-center { position:relative; overflow:hidden; }
+.scoreboard.theme-echo2 .score-center::before {
+  content:''; position:absolute; left:50%; top:50%; width:220%; aspect-ratio:1; margin:-110% 0 0 -110%;
+  pointer-events:none; z-index:0; border-radius:50%;
+  background:
+    radial-gradient(circle, rgba(94,69,120,0.35) 0 9%, transparent 10%),
+    repeating-radial-gradient(circle, rgba(255,255,255,0.045) 0 1px, transparent 1px 4px),
+    conic-gradient(from 20deg, transparent 0 40deg, rgba(255,255,255,0.06) 60deg, transparent 80deg 220deg, rgba(255,255,255,0.05) 240deg, transparent 260deg);
+  animation:echo2-spin 14s linear infinite;
+}
+.scoreboard.theme-echo2 .score-center > * { position:relative; z-index:1; }
+
+.scoreboard.theme-echo2 .event-bar          { font-family:'Narnia','Russo One',sans-serif; color:#D9D9D9; border-bottom-color:#5E4578; box-shadow:0 2px 14px rgba(94,69,120,0.50); }
+.scoreboard.theme-echo2 .player-name        { font-family:'Petrov Sans','Inter',sans-serif; }
+.scoreboard.theme-echo2 .player-pronouns    { font-family:'Petrov Sans','Inter',sans-serif; }
+.scoreboard.theme-echo2 .player-tag         { animation:echo2-text 3.2s ease-in-out infinite; }
+.scoreboard.theme-echo2 .score              { font-family:'Narnia','Russo One',sans-serif; color:#FFFFFF; text-shadow:0 0 12px rgba(155,123,184,0.90),0 0 26px rgba(94,69,120,0.45); }
+.scoreboard.theme-echo2 .score-center       { border-left-color:#5E4578; border-right-color:#5E4578; }
+.scoreboard.theme-echo2 .player-character   { border-color:#5E4578; box-shadow:0 0 14px rgba(94,69,120,0.55); }
+.scoreboard.theme-echo2 .player-left        { border-bottom-color:#5E4578; }
+.scoreboard.theme-echo2 .player-right       { border-bottom-color:#D9D9D9; }
+.scoreboard.theme-echo2 .slim-bar           { border-color:#5E4578; box-shadow:0 0 12px rgba(94,69,120,0.50),0 0 28px rgba(59,5,16,0.30); }
+.scoreboard.theme-echo2 .slim-name          { font-family:'Petrov Sans','Inter',sans-serif; animation:echo2-text 3.2s ease-in-out infinite; }
+.scoreboard.theme-echo2 .slim-score         { font-family:'Narnia','Russo One',sans-serif; color:#FFFFFF; text-shadow:0 0 10px rgba(155,123,184,0.85); }
+.scoreboard.theme-echo2 .theme-logo-bg img  { filter:drop-shadow(0 0 5px #5E4578) drop-shadow(0 0 12px rgba(155,123,184,0.60)); }
+
 /* ── Zelda: Breath of the Wild ───────────────────────────────── */
 
 @keyframes botw-sky {
@@ -2445,6 +2497,14 @@ body {
 /* ══════════════════════════════ */
 /* SMASH BROS ULTIMATE CHARACTERS */
 /* ══════════════════════════════ */
+
+/* ── nintendo (Nintendo Direct : blanc + rouge) ── */
+#scoreboard.theme-nintendo{background:linear-gradient(180deg,#FFFFFF 0%,#F4F4F4 100%);border:2px solid #E60012}
+#scoreboard.theme-nintendo::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:#E60012;pointer-events:none;z-index:1}
+#scoreboard.theme-nintendo .event-bar,#scoreboard.theme-nintendo .player-block,#scoreboard.theme-nintendo .score-center{border-color:#E6001255;box-shadow:0 0 6px rgba(230,0,18,0.12)}
+#scoreboard.theme-nintendo .player-name-text,#scoreboard.theme-nintendo .score,#scoreboard.theme-nintendo .score-vs{text-shadow:none}
+#scoreboard.theme-nintendo .score-vs{color:#E60012}
+#scoreboard.theme-nintendo .logo-zone{filter:drop-shadow(0 0 4px rgba(230,0,18,0.45))}
 
 /* ── smario ── */
 @keyframes smario-glow{0%,100%{box-shadow:0 0 18px #E5222255,0 0 4px #E5222233 inset}50%{box-shadow:0 0 36px #E5222288,0 0 10px #E5222255 inset}}
@@ -3949,6 +4009,12 @@ body {
   box-shadow: 0 0 10px rgba(255,200,50,0.2);
 }
 .lt-layout.theme-plage .lt-social-text { color: #FFD700; }
+
+/* Echo 2 */
+.lt-layout.theme-echo2 .lt-inner {
+  box-shadow: 0 0 10px rgba(94,69,120,0.35);
+}
+.lt-layout.theme-echo2 .lt-social-text { color: #D9D9D9; }
 
 /* Dual — glows par couleur de perso */
 .lt-layout.theme-dual #lt-p1 .lt-inner {

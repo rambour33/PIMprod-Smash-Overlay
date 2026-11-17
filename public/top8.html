@@ -6,7 +6,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/DA/echo2-fonts.css" />
   <link rel="stylesheet" href="top8.css" />
+  <link rel="stylesheet" href="top8-echo2.css" />
   <link rel="stylesheet" href="/pso-transition.css" />
 </head>
 <body>
@@ -44,11 +46,15 @@
   <!-- Ligne du bas : 4e – 8e -->
   <div class="t8-bottom" id="t8-bottom"></div>
 
+  <!-- Version ECHO 2 (affichée seulement avec le thème echo2) -->
+  <div id="e2-top8"></div>
+
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
   <script src="/texture.js"></script>
 <script src="top8.js"></script>
+<script src="top8-echo2.js"></script>
   <script>window.PSO_T = { id: 'top8', root: '#top8-root' };</script>
   <script src="/pso-transition.js"></script>
 </body>

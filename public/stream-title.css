@@ -330,3 +330,8 @@ body {
 .title-root.theme-rainbow .title-bottom-line {
   animation: st-hue-spin 5s linear infinite;
 }
+
+/* ── Echo 2 · polices DA ─────────────────────────────────────── */
+#title-root.theme-echo2                   { font-family:'Petrov Sans','Inter',sans-serif; }
+#title-root.theme-echo2 .title-text,
+#title-root.theme-echo2 .title-tag        { font-family:'Narnia','Russo One',sans-serif; letter-spacing:1px; }

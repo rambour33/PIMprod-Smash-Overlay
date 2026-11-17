@@ -261,3 +261,7 @@ body {
 .ticker-root.theme-midnight .ticker-body {
   background-image: linear-gradient(135deg, rgba(68,136,255,0.04) 0%, transparent 60%);
 }
+
+/* ── Echo 2 · polices DA ─────────────────────────────────────── */
+#ticker-root.theme-echo2                  { font-family:'Petrov Sans','Inter',sans-serif; }
+#ticker-root.theme-echo2 .label-text      { font-family:'Narnia','Russo One',sans-serif; letter-spacing:1px; }

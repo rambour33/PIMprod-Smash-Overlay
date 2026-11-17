@@ -6,6 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/DA/echo2-fonts.css">
   <link rel="stylesheet" href="victory.css">
 </head>
 <body>
@@ -40,6 +41,15 @@
       <img id="vic-char-img" src="" alt="">
     </div>
 
+    <!-- Pseudo du gagnant (grand, au-dessus du perso) -->
+    <div id="vic-winner-name"></div>
+
+    <!-- Perdant (petit, noir et blanc, en bas) -->
+    <div id="vic-loser">
+      <img id="vic-loser-img" src="" alt="">
+      <div id="vic-loser-name"></div>
+    </div>
+
     <!-- Panneau info -->
     <div id="vic-panel">
       <div id="vic-label">VICTOIRE</div>
@@ -54,6 +64,12 @@
         <span id="vic-name"></span>
       </div>
       <div id="vic-meta"></div>
+    </div>
+
+    <!-- Bloc round (haut droite) — identique à l'écran VS, thème ECHO 2 -->
+    <div id="vic-round-badge">
+      <div id="vic-rb-phase"></div>
+      <div id="vic-rb-round"></div>
     </div>
 
     <!-- Ligne d'accent bas de page -->
